@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="app">
+<!--    父向子通信-->
+    <introduce :title="msg"></introduce>
+    <hr>
+    <for-component :items="lessons"></for-component>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+
+    const introduce= {
+        template: "<h1>{{title}}</h1>",
+        props:['title']
+    };
+
+    const forComponent={
+        template: "<ul><li v-for='item in items'>{{item}}</li></ul>",
+        props:{
+            items:{ //复杂写法
+                type:Array,
+                default:['默认课程1','默认课程2']
+            }
+        }
+    }
+    const app=new Vue({
+        el:"#app",
+        data:{
+            msg:"大家好，我是渣渣辉！",
+            lessons:['java','c#','c++','python','php']
+        },
+        components:{
+            introduce:introduce, //如果值和属性相同，可以直接写introduce,就像下边。
+            forComponent
+        }
+    })
+</script>
+</body>
+</html>

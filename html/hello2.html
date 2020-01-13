@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        div#box {
+            width:100px;
+            height:100px;
+            color:darkgray
+        }
+        .red{
+            background-color:red;
+        }
+        .blue{
+            background-color:blue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--class属性-->
+    <button @click="color='red'">红</button>
+    <button @click="color='blue'">蓝</button>
+    <div id="box" :class="color">
+        我是盒子
+    </div>
+    <br>
+    <div style="width:100px;height: 100px" v-bind:class="color">
+        我是盒子
+    </div>
+
+    <hr>
+
+    <button @click="boo=!boo">点击切换背景</button>
+    <div :class="{red:boo,blue:!boo}">
+        点击按钮。背景会切换颜色噢
+    </div>
+
+    <hr>
+    <!--计算属性-->
+    <h1>
+        您的生日是：{{birth}}
+    </h1>
+    <!--watch-->
+    <input type="text" v-model="num">
+    <h1>num:{{num}}</h1>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app" ,
+        data: {
+            color:"red",
+            boo:true,//一个布尔标记，判断样式是否生效。
+            birthday:1529032123201,
+            num:1,
+            person:{
+                name:"jack",
+                age:21
+            }
+        },
+        computed:{ //属性计算
+            birth(){
+                const day=new Date(this.birthday);
+                return day.getFullYear()+"年"+day.getMonth()+"月"+day.getDay()+'日'
+            }
+        },
+        watch:{
+            num(newval,oldval){
+                console.log("新数据:"+newval,"旧数据："+oldval);
+            },
+            person:{
+                deep:true,
+                handler(val){
+                    console.log("新数据:"+val.age);
+                }
+            }
+
+        }
+    });
+</script>
+</body>
+</html>
